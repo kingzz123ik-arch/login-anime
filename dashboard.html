@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLYMPUS - Core Control Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: #05050a;
+            color: #00ffcc;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Header Neon */
+        header {
+            border: 1px solid #00ffcc;
+            padding: 15px;
+            text-align: center;
+            background: rgba(0, 255, 204, 0.05);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* Grid Layout Responsif HP */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .panel {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #333;
+            border-left: 4px solid #00ffcc;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .panel h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        /* Status Bar */
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .status-online { color: #00ffcc; text-shadow: 0 0 5px #00ffcc; }
+        .status-load { color: #ff3366; }
+
+        /* Log Box Berjalan */
+        .log-box {
+            background: #020205;
+            border: 1px solid #222;
+            height: 150px;
+            overflow-y: auto;
+            padding: 10px;
+            font-size: 12px;
+            color: #00ff55;
+        }
+
+        /* Tombol Aksi Keren */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid #ff3366;
+            color: #ff3366;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #ff3366;
+            color: #000;
+            box-shadow: 0 0 10px #ff3366;
+        }
+
+        .action-btn.secure {
+            border-color: #00ffcc;
+            color: #00ffcc;
+        }
+
+        .action-btn.secure:hover {
+            background: #00ffcc;
+            color: #000;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            background: #111;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .logout-btn:hover { color: #fff; border-color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>OLYMPUS CORE CENTRAL CONTROL PANEL</h1>
+        <p style="font-size: 11px; color: #888; margin-top: 5px;">AUTHORIZATION LEVEL: SUPREME CREATOR (KINGZZ)</p>
+    </header>
+
+    <div class="grid-container">
+        
+        <div class="panel">
+            <h3>System Mainframe Status</h3>
+            <div class="status-item">
+                <span>Core Olympus:</span>
+                <span class="status-online">ONLINE [STABLE]</span>
+            </div>
+            <div class="status-item">
+                <span>Firewall Bypass Protection:</span>
+                <span class="status-online">ACTIVE</span>
+            </div>
+            <div class="status-item">
+                <span>CPU Server Load:</span>
+                <span class="status-load" id="cpu-load">24%</span>
+            </div>
+            <div class="status-item">
+                <span>Memory Allocation:</span>
+                <span style="color: #ffcc00;">4.2 GB / 16 GB</span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>Terminal Command Execution</h3>
+            <div class="btn-grid">
+                <button class="action-btn secure" onclick="triggerAlert('System Mainframe Re-encrypted.')">RE-ENCRYPT</button>
+                <button class="action-btn secure" onclick="triggerAlert('Clear Cache Memory Done.')">PURGE CACHE</button>
+                <button class="action-btn" onclick="triggerAlert('WARNING: OVERRIDE INITIATED!')">OVERRIDE</button>
+                <button class="action-btn" onclick="alert('SHUTDOWN PROTOCOL DENIED! Only KINGZZ can destroy Olympus.')">SHUTDOWN</button>
+            </div>
+        </div>
+
+        <div class="panel" style="grid-column: 1 / -1;">
+            <h3>Live Mainframe Activity Logs</h3>
+            <div class="log-box" id="logBox">
+                [SYSTEM INITIATED] Fetching secure network database...<br>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="logout-btn" onclick="logout()">LOGOUT FROM MAINFRAME</button>
+
+    <script>
+        // Log simulator otomatis jalan biar keren
+        const logs = [
+            "Scanning external networks for vulnerabilities...",
+            "Data packets intercept blocked by Olympus Firewall.",
+            "Database synchronization completed successfully.",
+            "Agent authorization token verified.",
+            "Clearing tracking traces on local network...",
+            "Warning: Unauthorized connection attempt detected... Neutralized.",
+            "System status: 100% operational."
+        ];
+
+        const logBox = document.getElementById('logBox');
+        setInterval(() => {
+            const time = new Date().toLocaleTimeString();
+            const randomLog = logs[Math.floor(Math.random() * logs.length)];
+            logBox.innerHTML += `[${time}] ${randomLog}<br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }, 3000);
+
+        // Simulasi naik turun CPU Load
+        setInterval(() => {
+            const cpuLoad = Math.floor(Math.random() * 40) + 15;
+            document.getElementById('cpu-load').innerText = `${cpuLoad}%`;
+        }, 2000);
+
+        function triggerAlert(msg) {
+            alert(`[CORE COMMAND] ${msg}`);
+        }
+
+        function logout() {
+            alert("Disconnecting from Olympus...");
+            window.location.href = "index.html"; // Balik ke halaman login
+        }
+    </script>
+</body>
+                                                                        </html>
+                                                                        
