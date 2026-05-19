@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Login Interface - OLYMPUS</title>
+    <title>Olympus Gate - Login & Register</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,6 @@
             overflow: hidden;
         }
 
-        /* Canvas untuk efek animasi bergerak di background */
         #bg-canvas {
             position: absolute;
             top: 0;
@@ -32,22 +31,21 @@
             pointer-events: none;
         }
 
-        /* Background Image ala Anime (Bisa lu ganti URL-nya sesuai selera) */
         .anime-bg {
             position: absolute;
             width: 100%;
             height: 100%;
             background: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920') no-repeat center center/cover;
-            opacity: 0.3;
+            opacity: 0.2;
             z-index: 0;
             filter: blur(2px);
         }
 
-        /* Container Login dengan efek Glassmorphism */
-        .login-box {
+        /* Container Utama Form */
+        .container {
             position: relative;
             width: 400px;
-            padding: 40px;
+            min-height: 450px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
@@ -55,15 +53,32 @@
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             z-index: 10;
+            padding: 40px;
+            overflow: hidden;
             transition: 0.5s;
         }
 
-        .login-box:hover {
+        .container:hover {
             border: 1px solid rgba(0, 242, 254, 0.5);
             box-shadow: 0 15px 35px rgba(0, 242, 254, 0.2);
         }
 
-        .login-box h2 {
+        /* Mengatur perpindahan form slide */
+        .form-box {
+            position: absolute;
+            width: calc(100% - 80px);
+            transition: 0.5s ease-in-out;
+        }
+
+        /* Form Login di posisi awal, Form Register di kanan luar */
+        .login-form { left: 40px; }
+        .register-form { left: 450px; }
+
+        /* Kelas aktif buat geser form */
+        .container.active .login-form { left: -450px; }
+        .container.active .register-form { left: 40px; }
+
+        h2 {
             color: #fff;
             font-weight: 600;
             text-align: center;
@@ -76,7 +91,7 @@
         .input-group {
             position: relative;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .input-group input {
@@ -95,14 +110,12 @@
             position: absolute;
             top: 10px;
             left: 0;
-            padding: 0;
             font-size: 16px;
             color: rgba(255, 255, 255, 0.5);
             pointer-events: none;
             transition: 0.5s;
         }
 
-        /* Efek pas input di-klik/isi */
         .input-group input:focus ~ label,
         .input-group input:valid ~ label {
             top: -15px;
@@ -117,7 +130,6 @@
             border-bottom: 2px solid #00f2fe;
         }
 
-        /* Tombol Submit */
         .submit-btn {
             width: 100%;
             padding: 12px;
@@ -138,54 +150,127 @@
             transform: translateY(-2px);
         }
 
-        .options {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-
-        .options a {
+        .switch-link {
+            text-align: center;
+            margin-top: 20px;
             color: rgba(255, 255, 255, 0.6);
-            font-size: 12px;
-            text-decoration: none;
-            transition: 0.3s;
+            font-size: 14px;
         }
 
-        .options a:hover {
+        .switch-link a {
             color: #00f2fe;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .switch-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <!-- Efek Gambar Belakang -->
     <div class="anime-bg"></div>
-
-    <!-- Canvas Efek Bergerak -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Form Box -->
-    <div class="login-box">
-        <h2>System Login</h2>
-        <form action="#">
-            <div class="input-group">
-                <input type="text" required>
-                <label>Username / Agent ID</label>
-            </div>
-            <div class="input-group">
-                <input type="password" required>
-                <label>Access Key</label>
-            </div>
-            <button type="submit" class="submit-btn">ACCESS SYSTEM</button>
-            <div class="options">
-                <a href="#">Forgot Key?</a>
-                <a href="#">Register Access</a>
-            </div>
-        </form>
+    <div class="container" id="container">
+        
+        <div class="form-box login-form">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="loginUser" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPass" required>
+                    <label>Access Key</label>
+                </div>
+                <button type="submit" class="submit-btn">ACCESS OLYMPUS</button>
+                <div class="switch-link">
+                    Belum punya akses? <a href="#" id="toRegister">Registrasi</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register-form">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <input type="text" id="regUser" required>
+                    <label>Create Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="regPass" required>
+                    <label>Create Access Key</label>
+                </div>
+                <button type="submit" class="submit-btn">CREATE IDENTITY</button>
+                <div class="switch-link">
+                    Sudah punya akses? <a href="#" id="toLogin">Login</a>
+                </div>
+            </form>
+        </div>
+
     </div>
 
-    <!-- Script Animasi Bergerak (Partikel Melayang) -->
     <script>
+        // --- LOGIKA TOGGLE SLIDE FORM ---
+        const container = document.getElementById('container');
+        const toRegister = document.getElementById('toRegister');
+        const toLogin = document.getElementById('toLogin');
+
+        toRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            container.classList.add('active');
+        });
+
+        toLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            container.classList.remove('active');
+        });
+
+        // --- LOGIKA DATABASE LOCALSTORAGE & REDIRECT ---
+        const registerForm = document.getElementById('registerForm');
+        const loginForm = document.getElementById('loginForm');
+
+        // Target halaman tujuan setelah sukses login (Ganti pake link halaman lu!)
+        const HALAMAN_TUJUAN = "https://github.com/kingzz123ik-arch"; 
+
+        // Proses Registrasi
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('regUser').value;
+            const pass = document.getElementById('regPass').value;
+
+            // Simpan data mentah ke localStorage browser
+            localStorage.setItem('db_user', user);
+            localStorage.setItem('db_pass', pass);
+
+            alert('Identity Created! Silakan login menggunakan akun tersebut. 💀');
+            container.classList.remove('active'); // Balik ke form login
+            registerForm.reset();
+        });
+
+        // Proses Login
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+
+            // Ambil data yang tersimpan di localStorage
+            const savedUser = localStorage.getItem('db_user');
+            const savedPass = localStorage.getItem('db_pass');
+
+            // Validasi kecocokan data
+            if (user === savedUser && pass === savedPass) {
+                alert('ACCESS GRANTED! Membuka gerbang OLYMPUS... 😈');
+                window.location.href = HALAMAN_TUJUAN; // Tembak langsung ke halaman lu!
+            } else {
+                alert('ACCESS DENIED! Username atau Key lu salah, yang bener lah kon***! 🤬');
+            }
+        });
+
+        // --- ANIMASI BACKGROUND (PARTIKEL) ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -196,7 +281,6 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Arrai buat nampung partikel
         const particles = [];
         const particleCount = 60;
 
@@ -206,32 +290,25 @@
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 3 + 1;
                 this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * -1 - 0.2; // Bergerak ke atas ala anime sparks
+                this.speedY = Math.random() * -1 - 0.2;
                 this.color = `rgba(0, 242, 254, ${Math.random() * 0.5 + 0.2})`;
             }
-
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-
-                // Reset posisi kalo udah keluar layar
                 if (this.y < 0) {
                     this.y = canvas.height;
                     this.x = Math.random() * canvas.width;
                 }
-                if (this.x < 0 || this.x > canvas.width) {
-                    this.speedX = -this.speedX;
-                }
             }
-
             draw() {
                 ctx.fillStyle = this.color;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.shadowBlur = 10;
+                ctx.shadowBlur = 8;
                 ctx.shadowColor = '#00f2fe';
                 ctx.fill();
-                ctx.shadowBlur = 0; // reset shadow biar gak berat
+                ctx.shadowBlur = 0;
             }
         }
 
@@ -243,16 +320,12 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
-
         init();
         animate();
     </script>
 </body>
-  </html>
-  
+                </html>
+    
