@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Login Interface - OLYMPUS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0f0c20;
+            overflow: hidden;
+        }
+
+        /* Canvas untuk efek animasi bergerak di background */
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Background Image ala Anime (Bisa lu ganti URL-nya sesuai selera) */
+        .anime-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920') no-repeat center center/cover;
+            opacity: 0.3;
+            z-index: 0;
+            filter: blur(2px);
+        }
+
+        /* Container Login dengan efek Glassmorphism */
+        .login-box {
+            position: relative;
+            width: 400px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            transition: 0.5s;
+        }
+
+        .login-box:hover {
+            border: 1px solid rgba(0, 242, 254, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.2);
+        }
+
+        .login-box h2 {
+            color: #fff;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #00f2fe;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #fff;
+            outline: none;
+            transition: 0.5s;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            padding: 0;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        /* Efek pas input di-klik/isi */
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label {
+            top: -15px;
+            left: 0;
+            color: #00f2fe;
+            font-size: 12px;
+            text-shadow: 0 0 5px #00f2fe;
+        }
+
+        .input-group input:focus,
+        .input-group input:valid {
+            border-bottom: 2px solid #00f2fe;
+        }
+
+        /* Tombol Submit */
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            transform: translateY(-2px);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .options a {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .options a:hover {
+            color: #00f2fe;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Efek Gambar Belakang -->
+    <div class="anime-bg"></div>
+
+    <!-- Canvas Efek Bergerak -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Form Box -->
+    <div class="login-box">
+        <h2>System Login</h2>
+        <form action="#">
+            <div class="input-group">
+                <input type="text" required>
+                <label>Username / Agent ID</label>
+            </div>
+            <div class="input-group">
+                <input type="password" required>
+                <label>Access Key</label>
+            </div>
+            <button type="submit" class="submit-btn">ACCESS SYSTEM</button>
+            <div class="options">
+                <a href="#">Forgot Key?</a>
+                <a href="#">Register Access</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Script Animasi Bergerak (Partikel Melayang) -->
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Arrai buat nampung partikel
+        const particles = [];
+        const particleCount = 60;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * -1 - 0.2; // Bergerak ke atas ala anime sparks
+                this.color = `rgba(0, 242, 254, ${Math.random() * 0.5 + 0.2})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Reset posisi kalo udah keluar layar
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.speedX = -this.speedX;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00f2fe';
+                ctx.fill();
+                ctx.shadowBlur = 0; // reset shadow biar gak berat
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+  </html>
+  
