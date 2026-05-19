@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympus Gate - Login & Register</title>
+    <title>Olympus Gate - Dark Terminal</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
         }
 
         body {
@@ -17,10 +17,12 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #0f0c20;
+            background: #020205; /* Hitam pekat pekat */
             overflow: hidden;
+            position: relative;
         }
 
+        /* Canvas Matrix/Partikel Halus */
         #bg-canvas {
             position: absolute;
             top: 0;
@@ -31,41 +33,32 @@
             pointer-events: none;
         }
 
-        .anime-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920') no-repeat center center/cover;
-            opacity: 0.2;
-            z-index: 0;
-            filter: blur(2px);
-        }
-
+        /* Container Kaca Gelap Gulita */
         .container {
             position: relative;
             width: 400px;
-            min-height: 450px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            min-height: 460px;
+            background: rgba(5, 5, 10, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
             z-index: 10;
             padding: 40px;
             overflow: hidden;
-            transition: 0.5s;
+            transition: 0.4s ease-in-out;
         }
 
         .container:hover {
-            border: 1px solid rgba(0, 242, 254, 0.5);
-            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.2);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
         }
 
         .form-box {
             position: absolute;
             width: calc(100% - 80px);
-            transition: 0.5s ease-in-out;
+            transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .login-form { left: 40px; }
@@ -76,87 +69,92 @@
 
         h2 {
             color: #fff;
-            font-weight: 600;
+            font-weight: 700;
             text-align: center;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px #00f2fe;
+            font-size: 22px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
         .input-group {
             position: relative;
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .input-group input {
             width: 100%;
-            padding: 10px 0;
-            font-size: 16px;
-            color: #fff;
+            padding: 12px 0 6px;
+            font-size: 15px;
+            color: #00ffcc; /* Output teks warna cyan */
             background: transparent;
             border: none;
-            border-bottom: 2px solid #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             outline: none;
-            transition: 0.5s;
+            transition: 0.3s;
         }
 
         .input-group label {
             position: absolute;
-            top: 10px;
+            top: 12px;
             left: 0;
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.5);
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.4);
             pointer-events: none;
-            transition: 0.5s;
+            transition: 0.3s ease;
         }
 
         .input-group input:focus ~ label,
         .input-group input:valid ~ label {
-            top: -15px;
+            top: -12px;
             left: 0;
-            color: #00f2fe;
-            font-size: 12px;
-            text-shadow: 0 0 5px #00f2fe;
+            color: #00ffcc;
+            font-size: 11px;
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
+            letter-spacing: 1px;
         }
 
-        .input-group input:focus,
-        .input-group input:valid {
-            border-bottom: 2px solid #00f2fe;
+        .input-group input:focus {
+            border-bottom: 1px solid #00ffcc;
         }
 
+        /* Tombol Neon Dark */
         .submit-btn {
             width: 100%;
-            padding: 12px;
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            padding: 14px;
+            background: #00ffcc;
+            color: #000;
             border: none;
             outline: none;
-            border-radius: 5px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
+            letter-spacing: 1px;
             transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
         }
 
         .submit-btn:hover {
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            transform: translateY(-2px);
+            background: #fff;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.6);
+            transform: translateY(-1px);
         }
 
         .switch-link {
             text-align: center;
-            margin-top: 20px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
+            margin-top: 25px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
         }
 
         .switch-link a {
-            color: #00f2fe;
+            color: #00ffcc;
             text-decoration: none;
             font-weight: 600;
+            margin-left: 5px;
         }
 
         .switch-link a:hover {
@@ -166,5 +164,136 @@
 </head>
 <body>
 
-    <div class="anime-bg"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="container" id="container">
+        
+        <div class="form-box login-form">
+            <h2>ACCESS GATE</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="loginUser" required autocomplete="off">
+                    <label>IDENTITY USER</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPass" required>
+                    <label>ACCESS KEY</label>
+                </div>
+                <button type="submit" class="submit-btn">EXECUTE LOGIN</button>
+                <div class="switch-link">
+                    Gak punya akses? <a href="#" id="toRegister">REGISTRASI</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register-form">
+            <h2>INITIALIZE ID</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <input type="text" id="regUser" required autocomplete="off">
+                    <label>NEW USERNAME</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="regPass" required>
+                    <label>NEW ACCESS KEY</label>
+                </div>
+                <button type="submit" class="submit-btn">CREATE IDENTITY</button>
+                <div class="switch-link">
+                    Punya identitas? <a href="#" id="toLogin">LOGIN</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        // --- LOGIKA TOGGLE FORM ---
+        const container = document.getElementById('container');
+        const toRegister = document.getElementById('toRegister');
+        const toLogin = document.getElementById('toLogin');
+
+        toRegister.addEventListener('click', (e) => { e.preventDefault(); container.classList.add('active'); });
+        toLogin.addEventListener('click', (e) => { e.preventDefault(); container.classList.remove('active'); });
+
+        // --- AUTH FILTER PROTOKOL ---
+        const registerForm = document.getElementById('registerForm');
+        const loginForm = document.getElementById('loginForm');
+        const WEB_PRANK_ORANG_LAIN = "https://www.google.com"; 
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('regUser').value;
+            const pass = document.getElementById('regPass').value;
+            localStorage.setItem('db_user', user);
+            localStorage.setItem('db_pass', pass);
+            alert('Identity Created! Silakan login. 💀');
+            container.classList.remove('active');
+            registerForm.reset();
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+            const savedUser = localStorage.getItem('db_user');
+            const savedPass = localStorage.getItem('db_pass');
+
+            if (user === savedUser && pass === savedPass) {
+                // Hak Akses Khusus Penguasa (KINGZZ)
+                if (user.toUpperCase() === "KINGZZ") {
+                    alert('WELCOME BACK, SUPREME CREATOR KINGZZ! 😈🔥');
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert('ACCESS RESTRICTED! Jalur dialihkan... 🏴‍☠️');
+                    window.location.href = WEB_PRANK_ORANG_LAIN;
+                }
+            } else {
+                alert('ACCESS DENIED! Gak terdaftar di mainframe OLYMPUS! 🤬');
+            }
+        });
+
+        // --- DARK GRID CANVAS ANIMATION ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        const particleCount = 40;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = Math.random() * -0.5 - 0.1;
+                this.alpha = Math.random() * 0.3 + 0.1;
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(0, 255, 204, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+            </html>
     
