@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympus Gate - Dark Terminal</title>
+    <title>Olympus Gate - Blackout Protocol</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         body {
@@ -17,48 +17,47 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #020205; /* Hitam pekat pekat */
+            background: #0a0a0c; /* Hitam arang */
             overflow: hidden;
             position: relative;
         }
 
-        /* Canvas Matrix/Partikel Halus */
-        #bg-canvas {
+        /* Garis Grid Scan Jahanam */
+        body::before {
+            content: "";
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            background: linear-gradient(rgba(18, 18, 18, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 0, 0, 0));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 2;
             pointer-events: none;
         }
 
-        /* Container Kaca Gelap Gulita */
+        /* Container Hitam Mati Total */
         .container {
             position: relative;
-            width: 400px;
-            min-height: 460px;
-            background: rgba(5, 5, 10, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+            width: 380px;
+            min-height: 450px;
+            background: #000000; /* Hitam murni mampus */
+            border: 1px solid #222;
+            border-radius: 4px; /* Sudut tajam biar kaku */
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(255, 0, 0, 0.05);
             z-index: 10;
             padding: 40px;
             overflow: hidden;
-            transition: 0.4s ease-in-out;
+            transition: 0.3s;
         }
 
         .container:hover {
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
+            border: 1px solid #ff3333;
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.2);
         }
 
         .form-box {
             position: absolute;
             width: calc(100% - 80px);
-            transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .login-form { left: 40px; }
@@ -68,93 +67,90 @@
         .container.active .register-form { left: 40px; }
 
         h2 {
-            color: #fff;
-            font-weight: 700;
+            color: #ff3333; /* Merah darah */
+            font-weight: bold;
             text-align: center;
-            letter-spacing: 2px;
-            margin-bottom: 35px;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
             text-transform: uppercase;
-            font-size: 22px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
         }
 
         .input-group {
             position: relative;
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .input-group input {
             width: 100%;
-            padding: 12px 0 6px;
+            padding: 8px 0;
             font-size: 15px;
-            color: #00ffcc; /* Output teks warna cyan */
+            color: #ff3333; /* Teks input merah */
             background: transparent;
             border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid #333;
             outline: none;
             transition: 0.3s;
         }
 
         .input-group label {
             position: absolute;
-            top: 12px;
+            top: 8px;
             left: 0;
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            color: #555;
             pointer-events: none;
-            transition: 0.3s ease;
+            transition: 0.3s;
+            letter-spacing: 1px;
         }
 
         .input-group input:focus ~ label,
         .input-group input:valid ~ label {
-            top: -12px;
+            top: -15px;
             left: 0;
-            color: #00ffcc;
+            color: #ff3333;
             font-size: 11px;
-            text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
-            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
         }
 
         .input-group input:focus {
-            border-bottom: 1px solid #00ffcc;
+            border-bottom: 1px solid #ff3333;
         }
 
-        /* Tombol Neon Dark */
+        /* Tombol Dark Militan */
         .submit-btn {
             width: 100%;
-            padding: 14px;
-            background: #00ffcc;
-            color: #000;
-            border: none;
+            padding: 12px;
+            background: #111;
+            color: #ff3333;
+            border: 1px solid #ff3333;
             outline: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 700;
+            border-radius: 2px;
+            font-size: 13px;
+            font-weight: bold;
             cursor: pointer;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
         }
 
         .submit-btn:hover {
-            background: #fff;
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.6);
-            transform: translateY(-1px);
+            background: #ff3333;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
         }
 
         .switch-link {
             text-align: center;
-            margin-top: 25px;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 13px;
+            margin-top: 30px;
+            color: #444;
+            font-size: 12px;
         }
 
         .switch-link a {
-            color: #00ffcc;
+            color: #ff3333;
             text-decoration: none;
-            font-weight: 600;
-            margin-left: 5px;
         }
 
         .switch-link a:hover {
@@ -164,42 +160,40 @@
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
-
     <div class="container" id="container">
         
         <div class="form-box login-form">
-            <h2>ACCESS GATE</h2>
+            <h2>[ GATE.LOGIN ]</h2>
             <form id="loginForm">
                 <div class="input-group">
                     <input type="text" id="loginUser" required autocomplete="off">
-                    <label>IDENTITY USER</label>
+                    <label>UID_IDENTITY</label>
                 </div>
                 <div class="input-group">
                     <input type="password" id="loginPass" required>
-                    <label>ACCESS KEY</label>
+                    <label>SYS_PASSWORD</label>
                 </div>
-                <button type="submit" class="submit-btn">EXECUTE LOGIN</button>
+                <button type="submit" class="submit-btn">GRANT_ACCESS</button>
                 <div class="switch-link">
-                    Gak punya akses? <a href="#" id="toRegister">REGISTRASI</a>
+                    NO CONNECTION? <a href="#" id="toRegister">REGISTER_ID</a>
                 </div>
             </form>
         </div>
 
         <div class="form-box register-form">
-            <h2>INITIALIZE ID</h2>
+            <h2>[ INITIALIZE ]</h2>
             <form id="registerForm">
                 <div class="input-group">
                     <input type="text" id="regUser" required autocomplete="off">
-                    <label>NEW USERNAME</label>
+                    <label>NEW_UID</label>
                 </div>
                 <div class="input-group">
                     <input type="password" id="regPass" required>
-                    <label>NEW ACCESS KEY</label>
+                    <label>NEW_KEY</label>
                 </div>
-                <button type="submit" class="submit-btn">CREATE IDENTITY</button>
+                <button type="submit" class="submit-btn">BUILD_IDENTITY</button>
                 <div class="switch-link">
-                    Punya identitas? <a href="#" id="toLogin">LOGIN</a>
+                    HAS_ACCOUNT? <a href="#" id="toLogin">BACK_TO_GATE</a>
                 </div>
             </form>
         </div>
@@ -207,7 +201,6 @@
     </div>
 
     <script>
-        // --- LOGIKA TOGGLE FORM ---
         const container = document.getElementById('container');
         const toRegister = document.getElementById('toRegister');
         const toLogin = document.getElementById('toLogin');
@@ -215,7 +208,6 @@
         toRegister.addEventListener('click', (e) => { e.preventDefault(); container.classList.add('active'); });
         toLogin.addEventListener('click', (e) => { e.preventDefault(); container.classList.remove('active'); });
 
-        // --- AUTH FILTER PROTOKOL ---
         const registerForm = document.getElementById('registerForm');
         const loginForm = document.getElementById('loginForm');
         const WEB_PRANK_ORANG_LAIN = "https://www.google.com"; 
@@ -226,7 +218,7 @@
             const pass = document.getElementById('regPass').value;
             localStorage.setItem('db_user', user);
             localStorage.setItem('db_pass', pass);
-            alert('Identity Created! Silakan login. 💀');
+            alert('[SUCCESS] ID Saved to Core Cluster.');
             container.classList.remove('active');
             registerForm.reset();
         });
@@ -239,61 +231,18 @@
             const savedPass = localStorage.getItem('db_pass');
 
             if (user === savedUser && pass === savedPass) {
-                // Hak Akses Khusus Penguasa (KINGZZ)
                 if (user.toUpperCase() === "KINGZZ") {
-                    alert('WELCOME BACK, SUPREME CREATOR KINGZZ! 😈🔥');
+                    alert('[ACCESS GRANTED] INITIATING MAINFRAME CONNECTION...');
                     window.location.href = "dashboard.html";
                 } else {
-                    alert('ACCESS RESTRICTED! Jalur dialihkan... 🏴‍☠️');
+                    alert('[WARNING] LOW PRIVILEGE. REDIRECTING TRAFFIC...');
                     window.location.href = WEB_PRANK_ORANG_LAIN;
                 }
             } else {
-                alert('ACCESS DENIED! Gak terdaftar di mainframe OLYMPUS! 🤬');
+                alert('[DENIED] DETECTED ILLEGAL CREDENTIALS.');
             }
         });
-
-        // --- DARK GRID CANVAS ANIMATION ---
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const particles = [];
-        const particleCount = 40;
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedY = Math.random() * -0.5 - 0.1;
-                this.alpha = Math.random() * 0.3 + 0.1;
-            }
-            update() {
-                this.y += this.speedY;
-                if (this.y < 0) {
-                    this.y = canvas.height;
-                    this.x = Math.random() * canvas.width;
-                }
-            }
-            draw() {
-                ctx.fillStyle = `rgba(0, 255, 204, ${this.alpha})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); }
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
     </script>
 </body>
-            </html>
+    </html>
     
