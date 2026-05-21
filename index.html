@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympus Gate - Lamborghini Edition</title>
+    <title>Olympus Gate - Lamborghini Kinetic</title>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         * {
@@ -18,42 +18,58 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #050508;
+            background: #030305;
             overflow: hidden;
             position: relative;
         }
 
-        /* --- BACKGROUND SQUAD LAMBORGHINI LU --- */
-        .car-bg {
+        /* --- CONTAINER UTAMA BACKGROUND AGAR TIDAK OVERFLOW --- */
+        .bg-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Menggunakan gambar 3 mobil Lamborghini yang lu upload */
-            background: url('https://kingzz123ik-arch.github.io/login-anime/1000462892.jpg') no-repeat center center/cover;
-            opacity: 0.55; 
             z-index: 0;
-            /* Filter khusus biar latar putihnya gak bikin buta, fokus ke mobilnya */
-            filter: brightness(0.5) contrast(1.3) saturate(1.1);
+            overflow: hidden;
         }
 
-        /* Efek bayangan gelap melingkar di tepi layar (Vignette) */
+        /* --- ANIMASI BERGERAK MAJU (KEN BURNS EFFECT) --- */
+        .car-bg {
+            width: 100%;
+            height: 100%;
+            background: url('https://kingzz123ik-arch.github.io/login-anime/1000462892.jpg') no-repeat center center/cover;
+            opacity: 0.55; 
+            filter: brightness(0.45) contrast(1.35) saturate(1.1);
+            /* Eksekusi animasi looping bergerak maju mundur halus */
+            animation: moveCar 16s ease-in-out infinite alternate;
+        }
+
+        @keyframes moveCar {
+            0% {
+                transform: scale(1) translate(0px, 0px);
+            }
+            100% {
+                transform: scale(1.15) translate(-10px, -5px); /* Gambar nge-zoom maju & geser dikit */
+            }
+        }
+
+        /* Efek bayangan gelap di pinggir layar */
         body::after {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0) 30%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0) 25%, rgba(0,0,0,0.9) 100%);
             z-index: 1;
             pointer-events: none;
         }
 
-        /* --- CONTAINER TRANSITION GLASS (KACA GELAP) --- */
+        /* --- CONTAINER KACA LOGIN (GLASSMORPHISM) --- */
         .container {
             position: relative;
             width: 380px;
             min-height: 450px;
-            background: rgba(5, 5, 10, 0.75); 
+            background: rgba(4, 4, 8, 0.75); 
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(0, 242, 254, 0.15);
@@ -135,7 +151,7 @@
             border-bottom: 1px solid #00f2fe;
         }
 
-        /* --- BUTTON EXECUTE --- */
+        /* --- BUTTON NEON IGNITION --- */
         .submit-btn {
             width: 100%;
             padding: 12px;
@@ -178,7 +194,9 @@
 </head>
 <body>
 
-    <div class="car-bg"></div>
+    <div class="bg-container">
+        <div class="car-bg"></div>
+    </div>
 
     <div class="container" id="container">
         
@@ -221,7 +239,6 @@
     </div>
 
     <script>
-        // --- LOGIKA REDIRECT & VALIDASI AKSES PENGUASA (KINGZZ) ---
         const container = document.getElementById('container');
         const toRegister = document.getElementById('toRegister');
         const toLogin = document.getElementById('toLogin');
@@ -238,5 +255,32 @@
             const user = document.getElementById('regUser').value;
             const pass = document.getElementById('regPass').value;
             localStorage.setItem('db_user', user);
-            localStorage.setItem('
+            localStorage.setItem('db_pass', pass);
+            alert('[SUCCESS] Identity saved into Olympus Local Memory.');
+            container.classList.remove('active');
+            registerForm.reset();
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+            const savedUser = localStorage.getItem('db_user');
+            const savedPass = localStorage.getItem('db_pass');
+
+            if (user === savedUser && pass === savedPass) {
+                if (user.toUpperCase() === "KINGZZ") {
+                    alert('[IGNITION SUCCESS] INITIATING MAINFRAME CONNECTION...');
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert('[WARNING] LOW PRIVILEGE. EXCITING CONSOLE...');
+                    window.location.href = WEB_PRANK_ORANG_LAIN;
+                }
+            } else {
+                alert('[DENIED] DETECTED ILLEGAL CREDENTIALS.');
+            }
+        });
+    </script>
+</body>
+    </html>
     
