@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympus Gate - Hypercar Edition</title>
+    <title>Olympus Gate - Lamborghini Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         * {
@@ -18,46 +18,47 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #030305;
+            background: #050508;
             overflow: hidden;
             position: relative;
         }
 
-        /* --- BACKGROUND MOBIL KEREN --- */
+        /* --- BACKGROUND SQUAD LAMBORGHINI LU --- */
         .car-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Menggunakan gambar super sports car gelap futuristik */
-            background: url('https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1920') no-repeat center center/cover;
-            opacity: 0.45; /* Kontras diatur agar form login tetap jelas terbaca */
+            /* Menggunakan gambar 3 mobil Lamborghini yang lu upload */
+            background: url('https://kingzz123ik-arch.github.io/login-anime/1000462892.jpg') no-repeat center center/cover;
+            opacity: 0.55; 
             z-index: 0;
-            filter: brightness(0.7) contrast(1.1);
+            /* Filter khusus biar latar putihnya gak bikin buta, fokus ke mobilnya */
+            filter: brightness(0.5) contrast(1.3) saturate(1.1);
         }
 
-        /* Efek siluet kegelapan di bawah dan atas layar */
+        /* Efek bayangan gelap melingkar di tepi layar (Vignette) */
         body::after {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.9) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0) 30%, rgba(0,0,0,0.85) 100%);
             z-index: 1;
             pointer-events: none;
         }
 
-        /* --- CONTAINER INTERFACE TRANSPARAN (GLASSMORPHISM) --- */
+        /* --- CONTAINER TRANSITION GLASS (KACA GELAP) --- */
         .container {
             position: relative;
             width: 380px;
             min-height: 450px;
-            background: rgba(0, 0, 0, 0.65); /* Efek kaca gelap transparan */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            border-radius: 8px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 242, 254, 0.05);
+            background: rgba(5, 5, 10, 0.75); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            border-radius: 6px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
             z-index: 10;
             padding: 40px;
             overflow: hidden;
@@ -66,7 +67,7 @@
 
         .container:hover {
             border: 1px solid #00f2fe;
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.25);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.3);
         }
 
         .form-box {
@@ -89,7 +90,7 @@
             margin-bottom: 40px;
             text-transform: uppercase;
             font-size: 22px;
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
         }
 
         .input-group {
@@ -102,10 +103,10 @@
             width: 100%;
             padding: 8px 0;
             font-size: 16px;
-            color: #00f2fe; /* Teks ketikan warna biru neon */
+            color: #00f2fe; 
             background: transparent;
             border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             outline: none;
             transition: 0.3s;
         }
@@ -115,7 +116,7 @@
             top: 8px;
             left: 0;
             font-size: 14px;
-            color: #777;
+            color: #666;
             pointer-events: none;
             transition: 0.3s;
             letter-spacing: 1px;
@@ -134,7 +135,7 @@
             border-bottom: 1px solid #00f2fe;
         }
 
-        /* --- TOMBOL NEON RACING --- */
+        /* --- BUTTON EXECUTE --- */
         .submit-btn {
             width: 100%;
             padding: 12px;
@@ -161,7 +162,7 @@
         .switch-link {
             text-align: center;
             margin-top: 30px;
-            color: #555;
+            color: #444;
             font-size: 12px;
         }
 
@@ -182,7 +183,7 @@
     <div class="container" id="container">
         
         <div class="form-box login-form">
-            <h2>[ OLYMPUS ENGINE ]</h2>
+            <h2>[ OLYMPUS COCKPIT ]</h2>
             <form id="loginForm">
                 <div class="input-group">
                     <input type="text" id="loginUser" required autocomplete="off">
@@ -194,7 +195,7 @@
                 </div>
                 <button type="submit" class="submit-btn">START ENGINE</button>
                 <div class="switch-link">
-                    NEED ACCESS? <a href="#" id="toRegister">REGISTER_PILOT</a>
+                    NEED REGISTRATION? <a href="#" id="toRegister">REGISTER_PILOT</a>
                 </div>
             </form>
         </div>
@@ -212,7 +213,7 @@
                 </div>
                 <button type="submit" class="submit-btn">GENERATE PILOT</button>
                 <div class="switch-link">
-                    HAS ACCESS? <a href="#" id="toLogin">BACK_TO_GATE</a>
+                    ALREADY REGISTERED? <a href="#" id="toLogin">BACK_TO_GATE</a>
                 </div>
             </form>
         </div>
@@ -220,6 +221,7 @@
     </div>
 
     <script>
+        // --- LOGIKA REDIRECT & VALIDASI AKSES PENGUASA (KINGZZ) ---
         const container = document.getElementById('container');
         const toRegister = document.getElementById('toRegister');
         const toLogin = document.getElementById('toLogin');
@@ -236,31 +238,5 @@
             const user = document.getElementById('regUser').value;
             const pass = document.getElementById('regPass').value;
             localStorage.setItem('db_user', user);
-            localStorage.setItem('db_pass', pass);
-            alert('[SUCCESS] Pilot Identity Registered to Mainframe Cluster.');
-            container.classList.remove('active');
-            registerForm.reset();
-        });
-
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const user = document.getElementById('loginUser').value;
-            const pass = document.getElementById('loginPass').value;
-            const savedUser = localStorage.getItem('db_user');
-            const savedPass = localStorage.getItem('db_pass');
-
-            if (user === savedUser && pass === savedPass) {
-                if (user.toUpperCase() === "KINGZZ") {
-                    alert('[IGNITION SUCCESS] INITIATING TACTICAL HUD CONNECTION...');
-                    window.location.href = "dashboard.html";
-                } else {
-                    alert('[WARNING] INVALID AUTHORIZATION. REDIRECTING HOST...');
-                    window.location.href = WEB_PRANK_ORANG_LAIN;
-                }
-            } else {
-                alert('[DENIED] COCKPIT ACCESS REJECTED.');
-            }
-        });
-    </script>
-</body>
-</html>
+            localStorage.setItem('
+    
