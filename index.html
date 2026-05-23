@@ -3,284 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympus Gate - Lamborghini Kinetic</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Olympus Coffee | Master Brew</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Share Tech Mono', monospace;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #1a1a1a; /* Nuansa Espresso Gelap */
+            color: #e0e0e0;
+            line-height: 1.6;
         }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #030305;
-            overflow: hidden;
-            position: relative;
-        }
+        /* --- NAVIGATION --- */
+        nav { padding: 40px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 24px; color: #d4af37; letter-spacing: 2px; }
+        .nav-links a { color: #fff; text-decoration: none; margin-left: 30px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- CONTAINER UTAMA BACKGROUND AGAR TIDAK OVERFLOW --- */
-        .bg-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        /* --- ANIMASI BERGERAK MAJU (KEN BURNS EFFECT) --- */
-        .car-bg {
-            width: 100%;
-            height: 100%;
-            background: url('https://kingzz123ik-arch.github.io/login-anime/1000462892.jpg') no-repeat center center/cover;
-            opacity: 0.55; 
-            filter: brightness(0.45) contrast(1.35) saturate(1.1);
-            /* Eksekusi animasi looping bergerak maju mundur halus */
-            animation: moveCar 16s ease-in-out infinite alternate;
-        }
-
-        @keyframes moveCar {
-            0% {
-                transform: scale(1) translate(0px, 0px);
-            }
-            100% {
-                transform: scale(1.15) translate(-10px, -5px); /* Gambar nge-zoom maju & geser dikit */
-            }
-        }
-
-        /* Efek bayangan gelap di pinggir layar */
-        body::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0) 25%, rgba(0,0,0,0.9) 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* --- CONTAINER KACA LOGIN (GLASSMORPHISM) --- */
-        .container {
-            position: relative;
-            width: 380px;
-            min-height: 450px;
-            background: rgba(4, 4, 8, 0.75); 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 242, 254, 0.15);
-            border-radius: 6px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
-            z-index: 10;
-            padding: 40px;
-            overflow: hidden;
-            transition: 0.3s ease-in-out;
-        }
-
-        .container:hover {
-            border: 1px solid #00f2fe;
-            box-shadow: 0 0 35px rgba(0, 242, 254, 0.3);
-        }
-
-        .form-box {
-            position: absolute;
-            width: calc(100% - 80px);
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .login-form { left: 40px; }
-        .register-form { left: 450px; }
-
-        .container.active .login-form { left: -450px; }
-        .container.active .register-form { left: 40px; }
-
-        h2 {
-            color: #fff;
-            font-weight: bold;
+        /* --- HERO SECTION --- */
+        .hero { 
+            height: 80vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
             text-align: center;
-            letter-spacing: 3px;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            font-size: 22px;
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
         }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 60px; color: #fff; margin-bottom: 10px; }
+        .hero p { color: #d4af37; margin-bottom: 30px; }
+        .btn { padding: 12px 30px; border: 1px solid #d4af37; color: #d4af37; text-decoration: none; transition: 0.3s; }
+        .btn:hover { background: #d4af37; color: #000; }
 
-        .input-group {
-            position: relative;
-            width: 100%;
-            margin-bottom: 35px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 8px 0;
-            font-size: 16px;
-            color: #00f2fe; 
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .input-group label {
-            position: absolute;
-            top: 8px;
-            left: 0;
-            font-size: 14px;
-            color: #666;
-            pointer-events: none;
-            transition: 0.3s;
-            letter-spacing: 1px;
-        }
-
-        .input-group input:focus ~ label,
-        .input-group input:valid ~ label {
-            top: -15px;
-            left: 0;
-            color: #00f2fe;
-            font-size: 11px;
-            text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
-        }
-
-        .input-group input:focus {
-            border-bottom: 1px solid #00f2fe;
-        }
-
-        /* --- BUTTON NEON IGNITION --- */
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            color: #00f2fe;
-            border: 1px solid #00f2fe;
-            outline: none;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            letter-spacing: 2px;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-
-        .submit-btn:hover {
-            background: #00f2fe;
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
-            transform: translateY(-1px);
-        }
-
-        .switch-link {
-            text-align: center;
-            margin-top: 30px;
-            color: #444;
-            font-size: 12px;
-        }
-
-        .switch-link a {
-            color: #00f2fe;
-            text-decoration: none;
-        }
-
-        .switch-link a:hover {
-            text-decoration: underline;
-        }
+        /* --- MENU SECTION --- */
+        .menu { padding: 80px 20px; max-width: 1000px; margin: auto; }
+        .menu h2 { text-align: center; font-family: 'Playfair Display', serif; margin-bottom: 50px; color: #d4af37; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .card { background: #252525; padding: 30px; border-radius: 4px; border-bottom: 3px solid #d4af37; }
+        .card h3 { color: #fff; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="bg-container">
-        <div class="car-bg"></div>
-    </div>
-
-    <div class="container" id="container">
-        
-        <div class="form-box login-form">
-            <h2>[ OLYMPUS COCKPIT ]</h2>
-            <form id="loginForm">
-                <div class="input-group">
-                    <input type="text" id="loginUser" required autocomplete="off">
-                    <label>PILOT_ID</label>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="loginPass" required>
-                    <label>IGNITION_KEY</label>
-                </div>
-                <button type="submit" class="submit-btn">START ENGINE</button>
-                <div class="switch-link">
-                    NEED REGISTRATION? <a href="#" id="toRegister">REGISTER_PILOT</a>
-                </div>
-            </form>
+    <nav>
+        <div class="logo">OLYMPUS BREW</div>
+        <div class="nav-links">
+            <a href="#">Menu</a>
+            <a href="#">Story</a>
+            <a href="#">Order</a>
         </div>
+    </nav>
 
-        <div class="form-box register-form">
-            <h2>[ INITIALIZE ]</h2>
-            <form id="registerForm">
-                <div class="input-group">
-                    <input type="text" id="regUser" required autocomplete="off">
-                    <label>CREATE_PILOT_ID</label>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="regPass" required>
-                    <label>CREATE_KEY</label>
-                </div>
-                <button type="submit" class="submit-btn">GENERATE PILOT</button>
-                <div class="switch-link">
-                    ALREADY REGISTERED? <a href="#" id="toLogin">BACK_TO_GATE</a>
-                </div>
-            </form>
+    <section class="hero">
+        <h1>THE ART OF ROASTING</h1>
+        <p>Crafted for the bold. Brewed for the masters.</p>
+        <a href="#" class="btn">DISCOVER MENU</a>
+    </section>
+
+    <section class="menu">
+        <h2>SIGNATURE BREWS</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>BLACK GOLD ESPRESSO</h3>
+                <p>A deep, intense roast with notes of dark chocolate and roasted almond. Origin: Sumatra.</p>
+            </div>
+            <div class="card">
+                <h3>VELVET LATTE</h3>
+                <p>Silky steamed milk combined with our signature house blend. Pure comfort.</p>
+            </div>
+            <div class="card">
+                <h3>COLD BREW NITRO</h3>
+                <p>Infused with nitrogen for a creamy texture and smooth finish. Served ice-cold.</p>
+            </div>
         </div>
+    </section>
 
-    </div>
-
-    <script>
-        const container = document.getElementById('container');
-        const toRegister = document.getElementById('toRegister');
-        const toLogin = document.getElementById('toLogin');
-
-        toRegister.addEventListener('click', (e) => { e.preventDefault(); container.classList.add('active'); });
-        toLogin.addEventListener('click', (e) => { e.preventDefault(); container.classList.remove('active'); });
-
-        const registerForm = document.getElementById('registerForm');
-        const loginForm = document.getElementById('loginForm');
-        const WEB_PRANK_ORANG_LAIN = "https://www.google.com"; 
-
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const user = document.getElementById('regUser').value;
-            const pass = document.getElementById('regPass').value;
-            localStorage.setItem('db_user', user);
-            localStorage.setItem('db_pass', pass);
-            alert('[SUCCESS] Identity saved into Olympus Local Memory.');
-            container.classList.remove('active');
-            registerForm.reset();
-        });
-
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const user = document.getElementById('loginUser').value;
-            const pass = document.getElementById('loginPass').value;
-            const savedUser = localStorage.getItem('db_user');
-            const savedPass = localStorage.getItem('db_pass');
-
-            if (user === savedUser && pass === savedPass) {
-                if (user.toUpperCase() === "KINGZZ") {
-                    alert('[IGNITION SUCCESS] INITIATING MAINFRAME CONNECTION...');
-                    window.location.href = "dashboard.html";
-                } else {
-                    alert('[WARNING] LOW PRIVILEGE. EXCITING CONSOLE...');
-                    window.location.href = WEB_PRANK_ORANG_LAIN;
-                }
-            } else {
-                alert('[DENIED] DETECTED ILLEGAL CREDENTIALS.');
-            }
-        });
-    </script>
 </body>
-    </html>
-    
+</html>
