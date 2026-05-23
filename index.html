@@ -3,81 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympus Coffee | Master Brew</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <title>Kopi Xiao | Authentic & Modern Brew</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Poppins', sans-serif; 
-            background: #1a1a1a; /* Nuansa Espresso Gelap */
+            background: #121212; /* Dark Espresso background */
             color: #e0e0e0;
             line-height: 1.6;
         }
 
         /* --- NAVIGATION --- */
-        nav { padding: 40px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Playfair Display', serif; font-size: 24px; color: #d4af37; letter-spacing: 2px; }
-        .nav-links a { color: #fff; text-decoration: none; margin-left: 30px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        nav { 
+            padding: 30px 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            background: rgba(18, 18, 18, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 26px; color: #d4af37; letter-spacing: 2px; font-weight: bold; }
+        .nav-links a { color: #fff; text-decoration: none; margin-left: 30px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .nav-links a:hover { color: #d4af37; }
 
         /* --- HERO SECTION --- */
         .hero { 
-            height: 80vh; 
+            height: 75vh; 
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1920');
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1920');
             background-size: cover;
             background-position: center;
+            padding: 20px;
         }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 60px; color: #fff; margin-bottom: 10px; }
-        .hero p { color: #d4af37; margin-bottom: 30px; }
-        .btn { padding: 12px 30px; border: 1px solid #d4af37; color: #d4af37; text-decoration: none; transition: 0.3s; }
-        .btn:hover { background: #d4af37; color: #000; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 65px; color: #fff; margin-bottom: 10px; letter-spacing: 1px; }
+        .hero p { color: #d4af37; font-size: 18px; margin-bottom: 35px; font-style: italic; }
+        .btn-discover { padding: 12px 35px; border: 1px solid #d4af37; color: #d4af37; text-decoration: none; font-size: 14px; letter-spacing: 2px; font-weight: bold; transition: 0.3s; }
+        .btn-discover:hover { background: #d4af37; color: #000; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
 
         /* --- MENU SECTION --- */
-        .menu { padding: 80px 20px; max-width: 1000px; margin: auto; }
-        .menu h2 { text-align: center; font-family: 'Playfair Display', serif; margin-bottom: 50px; color: #d4af37; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .card { background: #252525; padding: 30px; border-radius: 4px; border-bottom: 3px solid #d4af37; }
-        .card h3 { color: #fff; margin-bottom: 10px; }
+        .menu-section { padding: 90px 20px; max-width: 1100px; margin: auto; }
+        .menu-section h2 { text-align: center; font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 10px; color: #d4af37; }
+        .menu-subtitle { text-align: center; color: #888; font-size: 14px; margin-bottom: 60px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card { 
+            background: #1c1c1c; 
+            padding: 35px 30px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 3px solid #d4af37; 
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-color: #d4af37;
+        }
+        .card-content h3 { color: #fff; font-size: 20px; margin-bottom: 12px; font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+        .card-content p { color: #aaa; font-size: 14px; margin-bottom: 25px; min-height: 60px; }
+        
+        /* --- BUTTON ORDER DIRECT WA --- */
+        .btn-order { 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px; 
+            background: rgba(212, 175, 55, 0.1); 
+            color: #d4af37; 
+            border: 1px solid #d4af37;
+            text-decoration: none; 
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: 0.3s; 
+        }
+        .btn-order:hover { 
+            background: #25d366; /* Warna Hijau WA Pas di-hover */
+            color: #fff; 
+            border-color: #25d366;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 40px; color: #555; font-size: 12px; border-top: 1px solid #1a1a1a; margin-top: 40px; }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            nav { padding: 20px; flex-direction: column; gap: 15px; }
+            .nav-links a { margin: 0 10px; font-size: 12px; }
+            .hero h1 { font-size: 42px; }
+            .hero p { font-size: 15px; }
+        }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">OLYMPUS BREW</div>
+        <div class="logo">KOPI XIAO</div>
         <div class="nav-links">
-            <a href="#">Menu</a>
-            <a href="#">Story</a>
-            <a href="#">Order</a>
+            <a href="#menu">Our Menu</a>
+            <a href="https://wa.me/6281949954102" target="_blank">Contact</a>
         </div>
     </nav>
 
     <section class="hero">
-        <h1>THE ART OF ROASTING</h1>
-        <p>Crafted for the bold. Brewed for the masters.</p>
-        <a href="#" class="btn">DISCOVER MENU</a>
+        <h1>KOPI XIAO</h1>
+        <p>Kenikmatan Kopi Autentik, Diracik Khusus Untuk Jiwa Yang Berani.</p>
+        <a href="#menu" class="btn-discover">LIHAT MENU</a>
     </section>
 
-    <section class="menu">
-        <h2>SIGNATURE BREWS</h2>
+    <section class="menu-section" id="menu">
+        <h2>SIGNATURE MENU</h2>
+        <div class="menu-subtitle">Freshly Brewed Premium Coffee</div>
+        
         <div class="grid">
+            <!-- MENU 1: KOPI GULA AREN -->
             <div class="card">
-                <h3>BLACK GOLD ESPRESSO</h3>
-                <p>A deep, intense roast with notes of dark chocolate and roasted almond. Origin: Sumatra.</p>
+                <div class="card-content">
+                    <h3>KOPI GULA AREN</h3>
+                    <p>Perpaduan espresso premium Xiao yang mantap, susu segar yang gurih, dan legitnya gula aren asli nusantara.</p>
+                </div>
+                <!-- Link WA otomatis isi format pesan -->
+                <a href="https://wa.me/6281949954102?text=Halo%20Kopi%20Xiao,%20saya%20mau%20order%20Kopi%20Gula%20Aren" target="_blank" class="btn-order">
+                    <i class="fa-brands fa-whatsapp"></i> ORDER VIA WA
+                </a>
             </div>
+
+            <!-- MENU 2: KOPI SUSU -->
             <div class="card">
-                <h3>VELVET LATTE</h3>
-                <p>Silky steamed milk combined with our signature house blend. Pure comfort.</p>
+                <div class="card-content">
+                    <h3>KOPI SUSU (SIGNATURE)</h3>
+                    <p>Racikan kopi susu klasik ala Kopi Xiao dengan tekstur lembut, rasa yang seimbang, dan aroma yang memikat.</p>
+                </div>
+                <a href="https://wa.me/6281949954102?text=Halo%20Kopi%20Xiao,%20saya%20mau%20order%20Kopi%20Susu" target="_blank" class="btn-order">
+                    <i class="fa-brands fa-whatsapp"></i> ORDER VIA WA
+                </a>
             </div>
+
+            <!-- MENU 3: BLACK GOLD ESPRESSO -->
             <div class="card">
-                <h3>COLD BREW NITRO</h3>
-                <p>Infused with nitrogen for a creamy texture and smooth finish. Served ice-cold.</p>
+                <div class="card-content">
+                    <h3>BLACK GOLD ESPRESSO</h3>
+                    <p>Ekstrak kopi hitam murni yang kuat dan padat, diekstrak langsung dari biji kopi pilihan terbaik Xiao.</p>
+                </div>
+                <a href="https://wa.me/6281949954102?text=Halo%20Kopi%20Xiao,%20saya%20mau%20order%20Black%20Gold%20Espresso" target="_blank" class="btn-order">
+                    <i class="fa-brands fa-whatsapp"></i> ORDER VIA WA
+                </a>
             </div>
         </div>
     </section>
+
+    <footer>
+        <p>&copy; 2026 Kopi Xiao. All Rights Reserved. Crafted by xiao.</p>
+    </footer>
 
 </body>
 </html>
